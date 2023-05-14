@@ -2,7 +2,6 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    border: 1px solid red;
 }
 
 body {
@@ -10,70 +9,79 @@ body {
     width: 100%;
     background-color: gray;
     display: grid;
-    grid-template-columns: 1fr repeat(4, 200px) 1fr;
-    grid-template-rows: 1fr repeat(4, 200px) 1fr;
-    place-items: center;
-}
-
-.casella{
-    height: 200px;
-    width: 200px;
-}
-
-.colonna1 {
-    grid-column: 2;
-}
-
-.colonna2 {
-    grid-column: 3;
-}
-
-.colonna3 {
-    grid-column: 4;
-}
-
-.colonna4 {
-    grid-column: 5;
-}
-
-.line1 {
-    grid-row: 2;
-}
-
-.line2 {
-    grid-row: 3;
-}
-
-.line3 {
-    grid-row: 4;
-}
-
-.line4 {
-    grid-row: 5;
 }
 
 .scoperta {
     background-color: black;
 }
 
-.schermata{
+.casella {
+    color: green;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.schermata {
     display: none;
-    background-color:blue;
-    height: 500px;
-    width: 500px;
+    background-color: blue;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 400px;
     position: absolute;
     justify-content: right;
     align-items: end;
     padding: 20px;
 }
 
-button{
-    width: 100px;
-    height: 30px;
+button.retry {
+    width: 90px;
+    height: 40px;
     background-color: gray;
 
 }
 
-.mina{
+button.switch{
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+}
+
+.mina {
     background-color: red;
+}
+
+.bandiera{
+    background-color: green;
+}
+
+.numBand{
+    width: 50px;
+    height: 30px;
+    background-color: black;
+    color: white;
+    position: absolute;
+    left: 30px;
+    top: 10px;
+    text-align: center;
+    font-family: Serif;
+    font-size: 1.7em;
+}
+
+.erroreMina{
+    background-color: rgb(179, 121, 13);
+}
+
+.erroreBandiera{
+    background-color: yellow;
 }

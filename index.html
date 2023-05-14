@@ -3,33 +3,14 @@
 <head>
     <title>campo minato</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="line1 colonna1 casella"></div>
-    <div class="line1 colonna2 casella"></div>
-    <div class="line1 colonna3 casella"></div>
-    <div class="line1 colonna4 casella"></div>
-
-    <div class="line2 colonna1 casella"></div>
-    <div class="line2 colonna2 casella"></div>
-    <div class="line2 colonna3 casella"></div>
-    <div class="line2 colonna4 casella"></div>
-
-    <div class="line3 colonna1 casella"></div>
-    <div class="line3 colonna2 casella"></div>
-    <div class="line3 colonna3 casella"></div>
-    <div class="line3 colonna4 casella"></div>
-    
-    <div class="line4 colonna1 casella"></div>
-    <div class="line4 colonna2 casella"></div>
-    <div class="line4 colonna3 casella"></div>
-    <div class="line4 colonna4 casella"></div>
-
+    <span class="numBand"></span>
+    <button class="switch" data-stato="detona" onclick="cambio()"></button>
     <div class="schermata">
-        <button type="button" class="retry">
+        <button type="button" class="retry" onclick="reset()">
             <p>re-try</p>
         </button>
     </div>
-</body>
 </html>
