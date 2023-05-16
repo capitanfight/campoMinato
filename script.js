@@ -1,30 +1,8 @@
-class casella {
-    constructor(stato, tipo, attorno) {
-        this.stato = stato;         //-true scoperta -false coperta
-        this.tipo = tipo;           //-true mina     -false casella normale
-        this.attorno = attorno;     //lista di mine attorno;
-    }
-
-    scopri(cas) {
-        this.stato = true;
-        cas.classList.add('scoperta');
-        let num;
-
-        if (!this.tipo) {
-            num = this.attorno.length;
-            if (num !== 0) {
-                cas.textContent = `${num}`;     //inserisco il numero di mine attorno alla casella
-            }
-        }
-
-    }
-}
-
 //modificabili
-const LATO_TERRENO = 8;
-const NUMERO_MINE = 10;
+const LATO_TERRENO = 15;
+const NUMERO_MINE = 30;
 //derivati
-const DIMENSIONI_CASELLE = 250 - (LATO_TERRENO * 17);
+const DIMENSIONI_CASELLE = 250 - (LATO_TERRENO * 13);
 const GRANDEZZA_TERRENO = LATO_TERRENO * LATO_TERRENO;
 const CASELLE = document.getElementsByClassName("casella");
 const SCHERMATA_FINE = document.getElementsByClassName("schermata");
@@ -97,6 +75,27 @@ const ANGOLI = [ANGOLO_ALTO_SINISTRA, ANGOLO_ALTO_DESTRA, ANGOLO_BASSO_SINISTRA,
 const mapCambio = new Map();
 mapCambio.set("bandiera", "detona");
 mapCambio.set("detona", "bandiera");
+
+class casella {
+    constructor(stato, tipo, attorno) {
+        this.stato = stato;         //-true scoperta -false coperta
+        this.tipo = tipo;           //-true mina     -false casella normale
+        this.attorno = attorno;     //lista di mine attorno;
+    }
+
+    scopri(cas) {
+        this.stato = true;
+        cas.classList.add('scoperta');
+        let num;
+
+        if (!this.tipo) {
+            num = this.attorno.length;
+            if (num !== 0) {
+                cas.textContent = `${num}`;     //inserisco il numero di mine attorno alla casella
+            }
+        }
+    }
+}
 
 function nomina() {
     let nome;
@@ -202,61 +201,58 @@ function creaMine() {
     }
     mine.sort(compareNumbers);
 
-    // console.log("La posizione delle mine e`:", mine);
+    console.log("La posizione delle mine e`:", mine);
     return mine;
 }
 
-function creaCasella(arr, posizione, mine) {
+function creaAttorno(pos, arrObj) {
+    if (arrObj[pos].tipo) {
+        //controllo a sinistra
+        if (!LATO_DESTRO.includes(pos)) {
+            for (let i = pos + LATO_TERRENO - 1; i <= pos + LATO_TERRENO + 1; i++) {
+                if (i >= 0 && i <= GRANDEZZA_TERRENO - 1 && !arrObj[i].tipo) {
+                    if ((LATO_SOPRA.includes(pos) && !LATO_SOTTO.includes(i)) ||
+                        (LATO_SOTTO.includes(pos) && !LATO_SOPRA.includes(i)) ||
+                        (!LATO_SOPRA.includes(pos) && !LATO_SOTTO.includes(pos))) {
+                        arrObj[i].attorno.push(pos);
+                    }
+                }
+            }
+        }
+        //controllo a destra
+        if (!LATO_SINISTRO.includes(pos)) {
+            for (let i = pos - LATO_TERRENO - 1; i <= pos - LATO_TERRENO + 1; i++) {
+                if (i >= 0 && i <= GRANDEZZA_TERRENO - 1 && !arrObj[i].tipo) {
+                    if ((LATO_SOPRA.includes(pos) && !LATO_SOTTO.includes(i)) ||
+                        (LATO_SOTTO.includes(pos) && !LATO_SOPRA.includes(i)) ||
+                        (!LATO_SOPRA.includes(pos) && !LATO_SOTTO.includes(pos))) {
+                        arrObj[i].attorno.push(pos);
+                    }
+                }
+            }
+        }
+        //controllo a sopra
+        if (!LATO_SOTTO.includes(pos) && !arrObj[pos + 1].tipo) {
+            arrObj[pos + 1].attorno.push(pos);
+        }
+        //controllo sotto
+        if (!LATO_SOPRA.includes(pos) && !arrObj[pos - 1].tipo) {
+            arrObj[pos - 1].attorno.push(pos);
+        }
+    }
+}
+
+function creaCasella(arr, pos, mine) {
     let tipo = false;       // inizializzo il tipo di casella da -false(non e' una mina)
     let attorno = [];
 
     for (let i = 0; i < NUMERO_MINE; i++) {
         //controllo se la casella e` una mina
-        if (mine[i] == posizione) {
+        if (mine[i] == pos) {
             tipo = true;
-        }
-
-        //controllo le 3 casselle destro
-        for (let j = - (LATO_TERRENO + 1); j < - (LATO_TERRENO - 2); j++) {
-            if (LATO_DESTRO.includes(posizione) &&
-                (mine[i] == posizione + (LATO_TERRENO + 1) &&
-                    j == -(LATO_TERRENO + 1))) {
-                // console.log("sotto destra", posizione);
-            } else if (LATO_SINISTRO.includes(posizione) &&
-                (mine[i] == posizione + (LATO_TERRENO - 1) &&
-                    j == -(LATO_TERRENO - 1))) {
-                // console.log("sotto sinistra", posizione);
-            } else if (posizione == mine[i] + j) {
-                attorno[i] = mine[i];
-            }
-        }
-        //controllo le 3 caselle sinistro
-        for (let j = - (LATO_TERRENO + 1); j < - (LATO_TERRENO - 2); j++) {
-            if (LATO_DESTRO.includes(posizione) &&
-                (mine[i] == posizione - (LATO_TERRENO - 1) &&
-                    j == -(LATO_TERRENO - 1))) {
-                // console.log("sopra destra", posizione);
-            } else if (LATO_SINISTRO.includes(posizione) &&
-                (mine[i] == posizione - (LATO_TERRENO + 1) &&
-                    j == -(LATO_TERRENO + 1))) {
-                // console.log("sopra sinistra", posizione);
-            } else if (posizione == mine[i] - j) {
-                attorno[i] = mine[i];
-            }
-        }
-        //controllo la casella a sopra
-        if (posizione == mine[i] + 1 &&
-            !LATO_SOPRA.includes(posizione)) {
-            attorno[i] = mine[i];
-        }
-        //controllo la casella a destra
-        if (posizione == mine[i] - 1 &&
-            !LATO_SOTTO.includes(posizione)) {
-            attorno[i] = mine[i];
+            CASELLE[pos].classList.add("mina");
         }
     }
-    // elimino numeri vuoti indesiderati
-    attorno = attorno.filter((str) => str !== '')
 
     // creo l'oggetto casella
     let cas = new casella(false, tipo, attorno);
@@ -267,7 +263,7 @@ function creaCasella(arr, posizione, mine) {
     }
 
     // inserisco l'oggetto casella{} all'interno di un array
-    arr[posizione] = cas;
+    arr[pos] = cas;
 
     return arr;
 }
@@ -276,6 +272,9 @@ function generaTerreno(caselleObj, mine) {
     // creo tutti gli oggetti casella{}
     for (let i = 0; i < GRANDEZZA_TERRENO; i++) {
         creaCasella(caselleObj, i, mine);
+    }
+    for (let i = 0; i < GRANDEZZA_TERRENO; i++) {
+        creaAttorno(i, caselleObj);
     }
 }
 
@@ -369,7 +368,7 @@ let arrBand = [];
 
 creaTabella(GRANDEZZA_TERRENO);
 generaTerreno(caselleObj, mine);
-
+console.log(caselleObj);
 
 const reset = () => {
     generaTerreno(caselleObj, creaMine());
@@ -391,7 +390,7 @@ const reset = () => {
 
 for (let i = 0; i < GRANDEZZA_TERRENO; i++) {
     document.addEventListener('click', e => {
-        if (e.target.closest('.casella') == CASELLE[i] && !caselleObj[i].stato  && !statoMina) {
+        if (e.target.closest('.casella') == CASELLE[i] && !caselleObj[i].stato && !statoMina) {
             if (PULSANTE_SWITCH.dataset.stato === "detona") {
                 caselleObj[i].scopri(CASELLE[i]);
                 if (!caselleObj[i].tipo && caselleObj[i].attorno.length == 0) {
@@ -427,14 +426,15 @@ for (let i = 0; i < GRANDEZZA_TERRENO; i++) {
     })
 }
 
-function correzione(arrBand, arrMine){
+function correzione(arrBand, arrMine) {
     let difMine = arrMine.filter(x => !arrBand.includes(x));
     let difBand = arrBand.filter(x => !arrMine.includes(x));
-    for (let i = 0; i < difMine.length; i++){
+    for (let i = 0; i < difMine.length; i++) {
         CASELLE[difMine[i]].classList.add("erroreMina");
     }
-    for (let i = 0; i < difBand.length; i++){
+    for (let i = 0; i < difBand.length; i++) {
         CASELLE[difBand[i]].classList.remove("bandiera");
+        CASELLE[difBand[i]].classList.remove("scoperta");
         CASELLE[difBand[i]].classList.add("erroreBandeira");
     }
 }
