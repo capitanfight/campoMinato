@@ -1,9 +1,10 @@
 //modificabili
-const LATO_TERRENO = 15;
+const LATO_TERRENO = 20;
 const NUMERO_MINE = 30;
 //derivati
-const DIMENSIONI_CASELLE = 250 - (LATO_TERRENO * 13);
 const GRANDEZZA_TERRENO = LATO_TERRENO * LATO_TERRENO;
+const DIMENSIONI_CASELLE = LATO_TERRENO / GRANDEZZA_TERRENO * 100;
+const GRIGLIA = document.getElementById("griglia");
 const CASELLE = document.getElementsByClassName("casella");
 const SCHERMATA_FINE = document.getElementsByClassName("schermata");
 const PULSANTE_RIPROVA = document.getElementById("retry");
@@ -11,8 +12,8 @@ const PULSANTE_SWITCH = document.querySelector('.switch');
 const CONTATORE_BANDIERE = document.querySelector(".numBand");
 let numBand = NUMERO_MINE;
 //modifico la griglia del body
-document.body.style.gridTemplateColumns = `1fr repeat(${LATO_TERRENO}, ${DIMENSIONI_CASELLE}px) 1fr`
-document.body.style.gridTemplateRows = `1fr repeat(${LATO_TERRENO}, ${DIMENSIONI_CASELLE}px) 1fr`
+GRIGLIA.style.gridTemplateColumns = `1fr repeat(${LATO_TERRENO}, ${DIMENSIONI_CASELLE}%) 1fr`
+GRIGLIA.style.gridTemplateRows = `1fr repeat(${LATO_TERRENO}, ${DIMENSIONI_CASELLE}%) 1fr`
 // inserisco il numero di bandiere
 CONTATORE_BANDIERE.textContent = `${numBand}`;
 
@@ -176,7 +177,7 @@ function creaTabella(nCas) {
         griglia.style.gridColumn = `${numRiga + 1}`;
         griglia.style.gridRow = `${numColonna + 1}`;
         // isnerosco la casella nel HTML
-        document.body.appendChild(griglia);
+        GRIGLIA.appendChild(griglia);
     }
 }
 

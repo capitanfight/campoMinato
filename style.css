@@ -4,9 +4,18 @@
     box-sizing: border-box;
 }
 
-body {
+body{
+    background-color: gray;
     height: 100vh;
-    width: 100%;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#griglia {
+    height: 800px;
+    width: 800px;
     background-color: gray;
     display: grid;
 }
