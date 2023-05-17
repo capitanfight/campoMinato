@@ -18,15 +18,13 @@ mapCambio.set("detona", "bandiera");
 function nomina() {
     let nome;
     if (PULSANTE_SWITCH.dataset.stato === "bandiera") {
-        nome = mapCambio.get("detona")[0].toUpperCase();
+        PULSANTE_SWITCH.style.backgroundImage = "url(svg/bandiera.svg)";
     } else {
-        nome = mapCambio.get("bandiera")[0].toUpperCase();
+        PULSANTE_SWITCH.style.backgroundImage = "url(svg/Mine.svg)";
     }
 
     return nome;
 }
-
-PULSANTE_SWITCH.textContent = `${nomina()}`;
 
 const cambio = () => { // cambia tra bandiera e detonazione
     if (PULSANTE_SWITCH.dataset.stato === "bandiera") {
@@ -35,7 +33,7 @@ const cambio = () => { // cambia tra bandiera e detonazione
         PULSANTE_SWITCH.dataset.stato = mapCambio.get("detona");
     }
 
-    PULSANTE_SWITCH.textContent = `${nomina()}`;
+    nomina();
 }
 
 document.querySelector('button.switch').addEventListener('click', cambio);
@@ -65,7 +63,7 @@ PULSTANTE_RESET.addEventListener('click', reset);
 for (let i = 0; i < GRANDEZZA_TERRENO; i++) {
     document.addEventListener('click', e => {
         if (e.target.closest('.casella') == CASELLE[i] && !caselleObj[i].stato && !statoMina) {
-            if (PULSANTE_SWITCH.dataset.stato === "detona") {
+            if (PULSANTE_SWITCH.dataset.stato === "detona"  && !arrBand.includes(i)) {
                 caselleObj[i].scopri(CASELLE[i]);
                 if (!caselleObj[i].tipo && caselleObj[i].attorno.length == 0) {
                     caselleObj[i].scopriGrande(caselleObj, i);
@@ -100,13 +98,16 @@ for (let i = 0; i < GRANDEZZA_TERRENO; i++) {
 function correzione(arrBand, arrMine) {
     let difMine = arrMine.filter(x => !arrBand.includes(x));
     let difBand = arrBand.filter(x => !arrMine.includes(x));
-    
+    for (let i = 0; i < GRANDEZZA_TERRENO; i++){
+        caselleObj[i].scopri(CASELLE[i]);
+    }
     for (let i = 0; i < difMine.length; i++) {
         CASELLE[difMine[i]].classList.add("erroreMina");
+        CASELLE[difMine[i]].classList.add("mina");
     }
     for (let i = 0; i < difBand.length; i++) {
         CASELLE[difBand[i]].classList.remove("bandiera");
         CASELLE[difBand[i]].classList.remove("scoperta");
-        CASELLE[difBand[i]].classList.add("erroreBandeira");
+        CASELLE[difBand[i]].classList.add("erroreBandiera");
     }
 }

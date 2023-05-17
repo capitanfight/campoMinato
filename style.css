@@ -1,10 +1,14 @@
+:root {
+    --coloreBordo: rgb(65, 63, 63);
+}
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     background-color: gray;
     height: 100vh;
     width: 100vw;
@@ -16,21 +20,26 @@ body{
 #griglia {
     height: 800px;
     width: 800px;
-    background-color: gray;
+    background-color: rgb(151, 145, 145);
     display: grid;
 }
 
-[data-stato = "scoperta"] {
-    background-color: black;
+[data-stato="coperta"] {
+    border: 4px solid rgb(192, 192, 192);
+    border-bottom: 5px solid var(--coloreBordo);
+    border-right: 5px solid var(--coloreBordo);
+}
+
+[data-stato="scoperta"] {
+    border: 1px solid var(--coloreBordo);
 }
 
 .casella {
-    color: green;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border: 1px solid black;
+    font-size: 2em;
 }
 
 #schermata {
@@ -53,7 +62,7 @@ button.retry {
 
 }
 
-button.switch{
+button.switch {
     height: 50px;
     width: 50px;
     position: absolute;
@@ -64,17 +73,18 @@ button.switch{
     justify-content: center;
     align-items: center;
     font-size: 2em;
+    background-image: url(svg/Mine.svg);
 }
 
 .mina {
-    background-color: red;
+    background-image: url(svg/Mine.svg);
 }
 
-.bandiera{
-    background-color: green;
+.bandiera {
+    background-image: url(svg/bandiera.svg);
 }
 
-.numBand{
+.numBand {
     width: 50px;
     height: 30px;
     background-color: black;
@@ -87,10 +97,10 @@ button.switch{
     font-size: 1.7em;
 }
 
-.erroreMina{
-    background-color: rgb(179, 121, 13);
+.erroreMina {
+    background-color: red;
 }
 
-.erroreBandeira{
-    background-color: yellow;
+.erroreBandiera {
+    background-color: orange;
 }

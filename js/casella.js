@@ -41,9 +41,37 @@ export class casella {
         cas.dataset.stato = "scoperta";
 
         let num;
+        let color;
         if (!this.tipo) {
             num = this.attorno.length;
             if (num !== 0) {
+                switch (num) {
+                    case 1:
+                        color = 'blue';
+                        break;
+                    case 2:
+                        color = 'green';
+                        break;
+                    case 3:
+                        color = 'red';
+                        break;
+                    case 4:
+                        color = 'rgb(17,17,92)';
+                        break;
+                    case 5:
+                        color = 'rgb(93,16,16)';
+                        break;
+                    case 6:
+                        color = 'rgb(213,87,87)';
+                        break;
+                    case 7:
+                        color = 'black';
+                        break;
+                    case 8:
+                        color = 'black';
+                        break;
+                }
+                cas.style.color = `${color}`;
                 cas.textContent = `${num}`;     //inserisco il numero di mine attorno alla casella
             }
         }
