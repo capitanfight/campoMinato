@@ -28,13 +28,9 @@ function generaColonna(cont) {
             cont = LATO_TERRENO;
         }
     }
-
     let num = cont;
-    let colonna = "colonna" + cont;
 
-    let arr = [colonna, num];
-
-    return arr;
+    return num;
 }
 
 function generaRiga(cont) {
@@ -44,31 +40,22 @@ function generaRiga(cont) {
             break;
         }
     }
-
     let num = cont;
-    let riga = "riga" + cont;
 
-    let arr = [riga, num];
-
-    return arr;
+    return num;
 }
 
 export function creaTabella(nCas) {
     for (let i = 1; i <= nCas; i++) {
 
-        let arrRiga = generaRiga(i);
-        let riga = arrRiga[0];
-        let numRiga = arrRiga[1];
-        let arrColonna = generaColonna(i);
-        let colonna = arrColonna[0];
-        let numColonna = arrColonna[1];
+        let numRiga = generaRiga(i);
+        let numColonna = generaColonna(i);
 
         //creo la casella
         const griglia = document.createElement("div");
         //inserisco alla casella le classi
         griglia.classList.add("casella");
-        griglia.classList.add(riga);
-        griglia.classList.add(colonna);
+        griglia.dataset.stato = "coperta";
         // inserisco la posizione della casella
         griglia.style.gridColumn = `${numRiga + 1}`;
         griglia.style.gridRow = `${numColonna + 1}`;
@@ -107,6 +94,7 @@ function creaCasella(arr, pos, mine) {
         //controllo se la casella e` una mina
         if (mine[i] == pos) {
             tipo = true;
+            // CASELLE[pos].classList.add("mina");
         }
     }
 
@@ -133,4 +121,5 @@ export function generaTerreno(casObj, mine) {
     for (let i = 0; i < GRANDEZZA_TERRENO; i++) {
         casObj[i].controllaAttorno(i, casObj);
     }
+    // console.log(casObj);
 }

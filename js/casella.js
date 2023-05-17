@@ -38,7 +38,7 @@ export class casella {
 
     scopri(cas) {
         this.stato = true;
-        cas.classList.add('scoperta');
+        cas.dataset.stato = "scoperta";
 
         let num;
         if (!this.tipo) {

@@ -20,7 +20,7 @@ body{
     display: grid;
 }
 
-.scoperta {
+[data-stato = "scoperta"] {
     background-color: black;
 }
 

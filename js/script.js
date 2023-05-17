@@ -41,7 +41,9 @@ const cambio = () => { // cambia tra bandiera e detonazione
 document.querySelector('button.switch').addEventListener('click', cambio);
 
 const reset = () => {
-    generaTerreno(caselleObj, creaMine());
+    caselleObj = [];
+    mine = creaMine();
+    generaTerreno(caselleObj, mine);
     SCHERMATA_FINE.style.display = "none";
     statoMina = false;
     numBand = NUMERO_MINE;
@@ -49,7 +51,7 @@ const reset = () => {
     CONTATORE_BANDIERE.textContent = `${numBand}`;
 
     for (let i = 0; i < GRANDEZZA_TERRENO; i++) {
-        CASELLE[i].classList.remove("scoperta");
+        CASELLE[i].dataset.stato = "coperta";
         CASELLE[i].classList.remove("mina");
         CASELLE[i].classList.remove("bandiera");
         CASELLE[i].classList.remove("erroreMina");
@@ -98,6 +100,7 @@ for (let i = 0; i < GRANDEZZA_TERRENO; i++) {
 function correzione(arrBand, arrMine) {
     let difMine = arrMine.filter(x => !arrBand.includes(x));
     let difBand = arrBand.filter(x => !arrMine.includes(x));
+    
     for (let i = 0; i < difMine.length; i++) {
         CASELLE[difMine[i]].classList.add("erroreMina");
     }
