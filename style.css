@@ -144,18 +144,18 @@ button.switch {
     background-image: url(svg/setting.svg);
 }
 
-#setting[data-stato='false']>.container {
+#setting[data-stato='false'] + .container {
     display: none;
 }
 
-#setting[data-stato='true']>.container {
+#setting[data-stato='true'] + .container {
     position: absolute;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    background-color: black;
+    height: 100%;
+    background-color: rgb(10, 9, 9);
     width: 300px;
-    bottom: -30px;
+    bottom: 0px;
     right: -50px;
     z-index: 15;
     justify-content: center;
@@ -170,9 +170,34 @@ button.switch {
     margin: 25px;
     justify-content: space-evenly;
     align-items: center;
+    border: 1px solid red;
+}
+
+.container>.item>p {
+    color: white;
 }
 
 button.difficolta {
     height: 30px;
     width: 100px;
+    border: 1px solid black;
+    border-radius: 25px;
+    background-color: black;
+    color: white;
+}
+
+button.difficolta.selezionato {
+    background-color: white;
+    color: black;
+}
+
+button#close {
+    background-image: url(svg/close_button.svg);
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    border: transparent;
+    position: absolute;
+    top: 0px;
+    left: -15px;
 }
