@@ -4,6 +4,7 @@ import { creaTabella } from "./tabella.js";
 import { GRANDEZZA_TERRENO, CASELLE, SCHERMATA_FINE } from "./costanti.js";
 import { PULSANTE_SWITCH } from "./cambio.js";
 import { correzione } from "./reset.js";
+import { cambioDiff } from "./difficolta.js";
 
 function compareNumbers(a, b) {
     return a - b;
@@ -14,8 +15,8 @@ const DIF_BUTTON = document.getElementsByClassName('difficolta');
 
 for (let i = 0; i < DIF_BUTTON.length; i++) {
     DIF_BUTTON[i].addEventListener('click', e => {
-        start(cambioDiff(e));
-        console.log('cambio');
+        cambioDiff(e);
+        start();
     });
 }
 

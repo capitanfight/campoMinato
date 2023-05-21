@@ -1,11 +1,11 @@
 import { start, arrCasObj as caselleObj } from "./script.js";
 import { GRANDEZZA_TERRENO, CASELLE, SCHERMATA_FINE } from "./costanti.js";
+import { mine } from "./script.js";
 
 const PULSTANTE_RESET = document.querySelector('.retry');
 
 const reset = () => {
-    start(35);
-    // generaTerreno(caselleObj, mine);
+    start(mine.getMine());
     SCHERMATA_FINE.style.display = "none";
 
     for (let i = 0; i < GRANDEZZA_TERRENO; i++) {

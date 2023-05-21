@@ -11,7 +11,6 @@ function creaCasella(arr, pos, arrMine) {
         //controllo se la casella e` una mina
         if (arrMine[i] == pos) {
             tipo = true;
-            // CASELLE[pos].classList.add("mina");
         }
     }
 
