@@ -2,7 +2,8 @@ import { start, arrCasObj as caselleObj } from "./script.js";
 import { GRANDEZZA_TERRENO, CASELLE, SCHERMATA_FINE } from "./costanti.js";
 import { mine } from "./script.js";
 
-const PULSTANTE_RESET = document.querySelector('.retry');
+const PULSTANTE_RESET_SCHERMATA = document.querySelector('.retry');
+const PULSTANTE_RESET = document.querySelector('.reset');
 
 const reset = () => {
     start(mine.getMine());
@@ -18,6 +19,7 @@ const reset = () => {
     }
 }
 
+PULSTANTE_RESET_SCHERMATA.addEventListener('click', reset);
 PULSTANTE_RESET.addEventListener('click', reset);
 
 
