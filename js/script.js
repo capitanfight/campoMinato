@@ -1,78 +1,64 @@
-// import { casella } from "./casella.js";
-import {GRANDEZZA_TERRENO, PULSANTE_SWITCH, PULSTANTE_RESET, CASELLE, SCHERMATA_FINE, NUMERO_MINE} from "/js/costanti.js";
-import {creaTabella, generaTerreno, creaMine, CONTATORE_BANDIERE, compareNumbers} from "/js/terreno.js";
+import { Mine } from "./mine.js";
+import { generaTerreno } from "./terreno.js";
+import { creaTabella } from "./tabella.js";
+import { GRANDEZZA_TERRENO, CASELLE, SCHERMATA_FINE } from "./costanti.js";
+import { PULSANTE_SWITCH } from "./cambio.js";
+import { correzione } from "./reset.js";
 
-let numBand = NUMERO_MINE;
-let caselleObj = [];        // lista di caselle{}
-let mine = creaMine();      // lista di mine
-let statoMina = false;
-let arrBand = [];
-
-creaTabella(GRANDEZZA_TERRENO);
-generaTerreno(caselleObj, mine);
-
-const mapCambio = new Map();
-mapCambio.set("bandiera", "detona");
-mapCambio.set("detona", "bandiera");
-
-function nomina() {
-    let nome;
-    if (PULSANTE_SWITCH.dataset.stato === "bandiera") {
-        PULSANTE_SWITCH.style.backgroundImage = "url(svg/bandiera.svg)";
-    } else {
-        PULSANTE_SWITCH.style.backgroundImage = "url(svg/Mine.svg)";
-    }
-
-    return nome;
+function compareNumbers(a, b) {
+    return a - b;
 }
 
-const cambio = () => { // cambia tra bandiera e detonazione
-    if (PULSANTE_SWITCH.dataset.stato === "bandiera") {
-        PULSANTE_SWITCH.dataset.stato = mapCambio.get("bandiera");
-    } else {
-        PULSANTE_SWITCH.dataset.stato = mapCambio.get("detona");
-    }
+// pulsante scelta diffficolta'
+const DIF_BUTTON = document.getElementsByClassName('difficolta');
 
-    nomina();
+for (let i = 0; i < DIF_BUTTON.length; i++) {
+    DIF_BUTTON[i].addEventListener('click', e => {
+        start(cambioDiff(e));
+        console.log('cambio');
+    });
 }
 
-document.querySelector('button.switch').addEventListener('click', cambio);
+// bandiere
+const CONTATORE_BANDIERE = document.querySelector(".numBand");
 
-const reset = () => {
-    caselleObj = [];
-    mine = creaMine();
-    generaTerreno(caselleObj, mine);
-    SCHERMATA_FINE.style.display = "none";
+// inizio codice
+export let mine = new Mine(35);
+
+export let arrCasObj;
+let statoMina;
+let arrBand;
+let arrMine; 
+let numBand;
+
+export function start() { //num
+    arrCasObj = [];
     statoMina = false;
-    numBand = NUMERO_MINE;
     arrBand = [];
+    numBand = mine.getMine();
+    arrMine = mine.creaMine();
     CONTATORE_BANDIERE.textContent = `${numBand}`;
-
-    for (let i = 0; i < GRANDEZZA_TERRENO; i++) {
-        CASELLE[i].dataset.stato = "coperta";
-        CASELLE[i].classList.remove("mina");
-        CASELLE[i].classList.remove("bandiera");
-        CASELLE[i].classList.remove("erroreMina");
-        CASELLE[i].classList.remove("erroreBandiera");
-        CASELLE[i].textContent = "";
-    }
+    generaTerreno(arrCasObj, arrMine);
+    // mine.setMine(num);
 }
 
-PULSTANTE_RESET.addEventListener('click', reset);
+start();
+creaTabella(GRANDEZZA_TERRENO);
 
 for (let i = 0; i < GRANDEZZA_TERRENO; i++) {
     document.addEventListener('click', e => {
-        if (e.target.closest('.casella') == CASELLE[i] && !caselleObj[i].stato && !statoMina) {
-            if (PULSANTE_SWITCH.dataset.stato === "detona"  && !arrBand.includes(i)) {
-                caselleObj[i].scopri(CASELLE[i]);
-                if (!caselleObj[i].tipo && caselleObj[i].attorno.length == 0) {
-                    caselleObj[i].scopriGrande(caselleObj, i);
+        if (e.target.closest('.casella') == CASELLE[i] && !arrCasObj[i].stato && !statoMina) {
+            if (PULSANTE_SWITCH.dataset.stato === "detona" && !arrBand.includes(i)) {
+                arrCasObj[i].scopri(CASELLE[i]);
+                if (!arrCasObj[i].tipo && arrCasObj[i].attorno.length == 0) {
+                    arrCasObj[i].scopriGrande(arrCasObj, i);
                 }
-                if (caselleObj[i].stato && caselleObj[i].tipo && !statoMina) {
+                if (arrCasObj[i].stato && arrCasObj[i].tipo && !statoMina) {
                     statoMina = true;
                     SCHERMATA_FINE.style.display = "flex";
+                    document.querySelector('#schermata>.content>p').textContent = "HAI PERSO!";
                     CASELLE[i].classList.add('mina');
-                    correzione(arrBand, mine);
+                    correzione(arrBand, arrMine);
                 }
             } else if (PULSANTE_SWITCH.dataset.stato === "bandiera") {
                 if (!arrBand.includes(i)) {
@@ -87,27 +73,11 @@ for (let i = 0; i < GRANDEZZA_TERRENO; i++) {
                     CASELLE[i].classList.remove("bandiera");
                 }
                 CONTATORE_BANDIERE.textContent = `${numBand}`;
-                if (arrBand.toString() == mine.toString()) {
+                if (arrBand.toString() == arrMine.toString()) {
                     SCHERMATA_FINE.style.display = "flex";
+                    document.querySelector('#schermata>.content>p').textContent = "HAI VINTO!";
                 }
             }
         }
     })
-}
-
-function correzione(arrBand, arrMine) {
-    let difMine = arrMine.filter(x => !arrBand.includes(x));
-    let difBand = arrBand.filter(x => !arrMine.includes(x));
-    for (let i = 0; i < GRANDEZZA_TERRENO; i++){
-        caselleObj[i].scopri(CASELLE[i]);
-    }
-    for (let i = 0; i < difMine.length; i++) {
-        CASELLE[difMine[i]].classList.add("erroreMina");
-        CASELLE[difMine[i]].classList.add("mina");
-    }
-    for (let i = 0; i < difBand.length; i++) {
-        CASELLE[difBand[i]].classList.remove("bandiera");
-        CASELLE[difBand[i]].classList.remove("scoperta");
-        CASELLE[difBand[i]].classList.add("erroreBandiera");
-    }
 }

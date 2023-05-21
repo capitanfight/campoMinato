@@ -1,13 +1,10 @@
 //modificabili
-export const LATO_TERRENO = 15;
-export const NUMERO_MINE = 35;
+export const LATO_TERRENO = 20;
 
 //derivati
 export const GRANDEZZA_TERRENO = LATO_TERRENO * LATO_TERRENO;
 export const CASELLE = document.getElementsByClassName("casella");
 export const SCHERMATA_FINE = document.getElementById("schermata");
-export const PULSANTE_SWITCH = document.querySelector('.switch');
-export const PULSTANTE_RESET = document.querySelector('.retry')
 
 // funzione che calcola i numeri a lato della griglia
 function calcLato(tipo) {

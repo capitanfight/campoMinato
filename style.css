@@ -44,7 +44,7 @@ body {
 
 #schermata {
     display: none;
-    background-color: blue;
+    background-color: rgb(10, 9, 9);
     top: 0;
     left: 0;
     height: 100%;
@@ -53,13 +53,16 @@ body {
     justify-content: right;
     align-items: end;
     padding: 20px;
+    box-shadow: 15px 0px 10px black;
 }
 
 button.retry {
     width: 90px;
     height: 40px;
-    background-color: gray;
-
+    background-color: rgb(0, 0, 0);
+    border: 1px solid black;
+    border-radius: 25px;
+    color: white;
 }
 
 button.switch {
@@ -103,4 +106,73 @@ button.switch {
 
 .erroreBandiera {
     background-color: orange;
+}
+
+#schermata>.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: -50%;
+    left: 30px;
+    width: 100%;
+    border: 1px solid red;
+    height: 400px;
+}
+
+.content>p {
+    font-size: 3em;
+    font-family: arial;
+    color: red;
+}
+
+.content .numMineRim {
+    position: relative;
+    margin-top: 30px;
+    font-size: 2em;
+    color: white;
+    text-align: center;
+}
+
+#setting {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    height: 50px;
+    width: 50px;
+    background-image: url(svg/setting.svg);
+}
+
+#setting[data-stato='false']>.container {
+    display: none;
+}
+
+#setting[data-stato='true']>.container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: black;
+    width: 300px;
+    bottom: -30px;
+    right: -50px;
+    z-index: 15;
+    justify-content: center;
+    align-items: center;
+}
+
+.container>.item {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    width: 250px;
+    margin: 25px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+button.difficolta {
+    height: 30px;
+    width: 100px;
 }
