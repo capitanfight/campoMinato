@@ -209,3 +209,29 @@ button.reset {
     background-color: transparent;
     border-radius: 100%;
 }
+
+@media screen and (width: 1080px) {
+    #setting[data-stato='true']+.container {
+        height: 2510px;
+        width: 700px;
+        transform: translate(0, 110px);
+    }
+
+    button.difficolta {
+        transform: scale(2);
+    }
+
+    .container>.item {
+        transform: scale(2);
+        height: 400px;
+    }
+
+    .container>.item>p {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    button#close {
+        transform: scale(2.5) translate(0, 10px);
+    }
+}
