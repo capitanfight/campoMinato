@@ -15,6 +15,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    overflow: hidden;
 }
 
 #griglia {
@@ -44,24 +46,41 @@ body {
 
 #schermata {
     display: none;
+
     background-color: rgb(10, 9, 9);
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 400px;
+
+    top: 15vh;
+    left: 20vw;
+
+    height: 70vh;
+    width: 60vw;
+
     position: absolute;
+
     justify-content: right;
     align-items: end;
+
+    border-radius: 30px;
+
     padding: 20px;
     box-shadow: 15px 0px 10px black;
 }
 
 button.retry {
-    width: 90px;
-    height: 40px;
+    width: 200px;
+    height: 120px;
+
+    position: absolute;
+    bottom: calc(30% - 120px/2);
+    left: calc(50% - 200px/2);
+
     background-color: rgb(0, 0, 0);
+
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 100px;
+
+    font-size: 3rem;
+
     color: white;
 }
 
@@ -111,17 +130,19 @@ button.switch {
 #schermata>.content {
     display: flex;
     flex-direction: column;
+
     justify-content: center;
     align-items: center;
+
     position: relative;
-    top: -50%;
-    left: 30px;
+
     width: 100%;
     height: 400px;
+    margin-bottom: auto;
 }
 
 .content>p {
-    font-size: 3em;
+    font-size: 5em;
     font-family: arial;
     color: red;
 }
@@ -143,20 +164,27 @@ button.switch {
     background-image: url(svg/setting.svg);
 }
 
-#setting[data-stato='false'] + .container {
+#setting[data-stato='false']+.container {
     display: none;
 }
 
-#setting[data-stato='true'] + .container {
+#setting[data-stato='true']+.container {
     position: absolute;
+
     display: flex;
     flex-direction: column;
-    height: 100%;
+
+    height: 70vh;
+    width: 50vw;
+
     background-color: rgb(10, 9, 9);
-    width: 300px;
-    bottom: 0px;
-    right: -50px;
+    border-radius: 50px;
+
+    top: 15vh;
+    left: 25vw;
+
     z-index: 15;
+
     justify-content: center;
     align-items: center;
 }
@@ -164,24 +192,34 @@ button.switch {
 .container>.item {
     display: flex;
     flex-direction: column;
-    height: 300px;
-    width: 250px;
+
+    height: 60%;
+    width: 70%;
+
     margin: 25px;
+
     justify-content: space-evenly;
     align-items: center;
 }
 
 .container>.item>p {
     color: white;
+
+    font-size: 3rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 button.difficolta {
-    height: 30px;
-    width: 100px;
+    height: 50px;
+    width: 200px;
+
     border: 1px solid black;
     border-radius: 25px;
+
     background-color: black;
     color: white;
+
+    font-size: 2rem;
 }
 
 button.difficolta.selezionato {
@@ -191,13 +229,16 @@ button.difficolta.selezionato {
 
 button#close {
     background-image: url(svg/close_button.svg);
-    height: 30px;
-    width: 30px;
+
+    height: 50px;
+    width: 50px;
+
     border-radius: 100%;
     border: transparent;
+
     position: absolute;
-    top: 0px;
-    left: -15px;
+    top: 30px;
+    right: 30px;
 }
 
 button.reset {
