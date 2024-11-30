@@ -47,7 +47,7 @@ body {
 #schermata {
     display: none;
 
-    background-color: rgb(10, 9, 9);
+    background-color: rgba(10, 9, 9, .8);
 
     top: 15vh;
     left: 20vw;
@@ -63,7 +63,7 @@ body {
     border-radius: 30px;
 
     padding: 20px;
-    box-shadow: 15px 0px 10px black;
+    box-shadow: 15px 0px 10px rgba(0, 0, 0, .9);
 }
 
 button.retry {
