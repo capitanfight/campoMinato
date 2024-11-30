@@ -15,14 +15,18 @@ function nomina() {
     return nome;
 }
 
-const cambio = () => { // cambia tra bandiera e detonazione
-    if (PULSANTE_SWITCH.dataset.stato === "bandiera") {
-        PULSANTE_SWITCH.dataset.stato = mapCambio.get("bandiera");
-    } else {
-        PULSANTE_SWITCH.dataset.stato = mapCambio.get("detona");
+const cambio = (e) => { // cambia tra bandiera e detonazione
+
+    if (e.code == "Space" || e.target == PULSANTE_SWITCH) {
+        if (PULSANTE_SWITCH.dataset.stato === "bandiera") {
+          PULSANTE_SWITCH.dataset.stato = mapCambio.get("bandiera");
+        } else {
+          PULSANTE_SWITCH.dataset.stato = mapCambio.get("detona");
+        }
     }
 
     nomina();
 }
 
 document.querySelector('button.switch').addEventListener('click', cambio);
+document.addEventListener("keypress", cambio);

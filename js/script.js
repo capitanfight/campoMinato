@@ -20,6 +20,8 @@ for (let i = 0; i < DIF_BUTTON.length; i++) {
     });
 }
 
+
+
 // bandiere
 const CONTATORE_BANDIERE = document.querySelector(".numBand");
 
